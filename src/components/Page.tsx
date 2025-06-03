@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import { hideBackButton, onBackButtonClick, showBackButton, postEvent, isTMA } from '@telegram-apps/sdk-react';
+import { hideBackButton, onBackButtonClick, showBackButton, postEvent } from '@telegram-apps/sdk-react';
 import { type PropsWithChildren, useEffect, useRef } from 'react';
 import { SafeAreaFade } from '@/components/SafeAreaFade/SafeAreaFade';
 import TabBar from '@/components/TabBar/TabBar';
 import './Page.css';
-import {isTelegramUrl} from "@tonconnect/ui-react";
 
 // Стили для учета отступов safe area с дополнительным отступом для fullscreen режима
 const safeAreaStyle = {

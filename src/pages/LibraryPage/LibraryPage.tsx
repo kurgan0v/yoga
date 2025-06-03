@@ -125,9 +125,9 @@ const LibraryPage: React.FC = () => {
   };
 
   // Обработчик перехода к избранному
-  const handleFavoritesClick = () => {
-    navigate('/library/favorites');
-  };
+  // const handleFavoritesClick = () => {
+  //   navigate('/library/favorites');
+  // };
 
   // Обработчик переключения фильтра по времени
   const toggleTimeFilter = () => {
@@ -142,8 +142,6 @@ const LibraryPage: React.FC = () => {
   // Получаем initData из Telegram SDK
   const initDataState = useSignal(_initDataState);
 
-  // Используем наш хук для работы с Supabase
-  const { loading: loading2, error: erro23 } = useSupabaseUser(initDataState);
   const user = useMemo(() =>
           initDataState && initDataState.user ? initDataState.user : undefined,
       [initDataState]);

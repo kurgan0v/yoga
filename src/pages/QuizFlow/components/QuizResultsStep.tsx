@@ -156,26 +156,26 @@ const QuizResultsStep: React.FC = () => {
     findRecommendation();
   }, [state.practiceType, state.duration, state.goal, state.approach]);
 
-  const handleStartPractice = () => {
-    // Для самостоятельных медитаций переходим напрямую на таймер без поиска рекомендаций
-    if (state.practiceType === 'meditation' && state.approach === 'self' && state.selfMeditationSettings) {
-      const { object, duration } = state.selfMeditationSettings;
-      navigate(`/practice/timer`, {
-        state: { 
-          duration, 
-          object, 
-          fromQuiz: true,
-          practiceType: 'meditation'
-        } 
-      });
-      return;
-    }
-    
-    // Для всех остальных практик (видео, аудио) переходим по ID контента
-    if (recommendation) {
-      navigate(`/practice/${recommendation.id}`);
-    }
-  };
+  // const handleStartPractice = () => {
+  //   // Для самостоятельных медитаций переходим напрямую на таймер без поиска рекомендаций
+  //   if (state.practiceType === 'meditation' && state.approach === 'self' && state.selfMeditationSettings) {
+  //     const { object, duration } = state.selfMeditationSettings;
+  //     navigate(`/practice/timer`, {
+  //       state: {
+  //         duration,
+  //         object,
+  //         fromQuiz: true,
+  //         practiceType: 'meditation'
+  //       }
+  //     });
+  //     return;
+  //   }
+  //
+  //   // Для всех остальных практик (видео, аудио) переходим по ID контента
+  //   if (recommendation) {
+  //     navigate(`/practice/${recommendation.id}`);
+  //   }
+  // };
 
   const handleRetakeQuiz = () => {
     navigate('/quiz');
@@ -237,7 +237,7 @@ const QuizResultsStep: React.FC = () => {
             <Button className={'!rounded-none'} onClick={handleOtherPractice} >
               другая практика
             </Button>
-            <p  className={'!rounded-none font-bold underline underline-offset-4 text-center'} onClick={handleRetakeQuiz} variant="inverted">
+            <p  className={'!rounded-none font-bold underline underline-offset-4 text-center'} onClick={handleRetakeQuiz} >
               о направлении
             </p>
           </div>
@@ -287,7 +287,7 @@ const QuizResultsStep: React.FC = () => {
             <Button className={'!rounded-none'} onClick={handleOtherPractice} fullWidth>
               другая практика
             </Button>
-            <p  className={'!rounded-none font-bold underline underline-offset-4 text-center'} onClick={handleRetakeQuiz} variant="inverted" fullWidth>
+            <p  className={'!rounded-none font-bold underline underline-offset-4 text-center'} onClick={handleRetakeQuiz}>
               о направлении
             </p>
           </div>

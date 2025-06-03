@@ -12,12 +12,10 @@ interface VideoPlayerProps {
 const VideoPlayer: React.FC<VideoPlayerProps> = () => {
   const { state, setState, play, pause } = usePlayer();
   const { contentData, playing, muted, fullscreen } = state as PlayerState;
-  const [playerError, setPlayerError] = useState<boolean>(false);
+  const [, setPlayerError] = useState<boolean>(false);
   // const kinescopePlayerRef = useRef<any>(null); // Если понадобится прямой доступ к методам плеера
 
   const kinescopeId = contentData?.kinescopeId;
-  const title = contentData?.title || 'Видео';
-  const description = contentData?.description;
 
   // Fallback для демо/тестирования, если kinescopeId отсутствует
   const fallbackVideoId = '75EPdFkFahbUdBqsPvBmqA';

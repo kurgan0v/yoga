@@ -37,7 +37,7 @@ const BrowserWarning: FC = () => (
 
 export const MainScreen: FC = () => {
   const navigate = useNavigate();
-  const [contentVisible, setContentVisible] = useState(false);
+  const [, setContentVisible] = useState(false);
 
   // Проверяем, работает ли приложение в Telegram Mini App
   const isInTelegramApp = useMemo(() => {

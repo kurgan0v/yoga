@@ -16,7 +16,7 @@ import {Page} from "@/components";
 
 // Основной компонент с навигацией между шагами
 const QuizFlowContent: React.FC = () => {
-  const { state, goBack, goNext, resetQuiz, canGoNext } = useQuiz();
+  const { state, goBack, resetQuiz } = useQuiz();
   const navigate = useNavigate();
 
   // Автосброс квиза при каждом заходе
@@ -37,26 +37,26 @@ const QuizFlowContent: React.FC = () => {
   };
 
   // Получение общего количества шагов
-  const getTotalSteps = () => {
-    if (!state.practiceType) return 5;
-    
-    switch (state.practiceType) {
-      case 'short':
-      case 'breathing':
-        return 3; // Тип -> Цель -> Результат
-      case 'physical':
-        return 4; // Тип -> Длительность -> Цель -> Результат
-      case 'meditation':
-        if (state.approach === 'self') {
-          return 5; // Тип -> Подход -> Объект -> Длительность -> Результат
-        } else if (state.approach === 'guided') {
-          return 4; // Тип -> Подход -> Цель -> Результат
-        }
-        return 3; // Тип -> Подход -> ...
-      default:
-        return 5;
-    }
-  };
+  // const getTotalSteps = () => {
+  //   if (!state.practiceType) return 5;
+  //
+  //   switch (state.practiceType) {
+  //     case 'short':
+  //     case 'breathing':
+  //       return 3; // Тип -> Цель -> Результат
+  //     case 'physical':
+  //       return 4; // Тип -> Длительность -> Цель -> Результат
+  //     case 'meditation':
+  //       if (state.approach === 'self') {
+  //         return 5; // Тип -> Подход -> Объект -> Длительность -> Результат
+  //       } else if (state.approach === 'guided') {
+  //         return 4; // Тип -> Подход -> Цель -> Результат
+  //       }
+  //       return 3; // Тип -> Подход -> ...
+  //     default:
+  //       return 5;
+  //   }
+  // };
 
   // Получение заголовка текущего шага по дизайну Figma
   const getStepTitle = () => {
