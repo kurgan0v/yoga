@@ -3,7 +3,7 @@
   max-width: 100vw;
   overflow-x: hidden;
   background: var(--tg-theme-bg-color, #ffffff);
-  color: var(--tg-theme-text-color, #000000);
+  color: #000000;
   min-height: 100vh;
   padding-bottom: 80px;
 }
@@ -21,7 +21,7 @@
   background: none;
   border: none;
   font-size: 24px;
-  color: var(--tg-theme-text-color, #000000);
+  color: #000000;
   cursor: pointer;
   padding: 8px;
   border-radius: 50%;
@@ -41,7 +41,7 @@
   font-size: 20px;
   font-weight: 600;
   margin: 0;
-  color: var(--tg-theme-text-color, #000000);
+  color: #000000;
 }
 
 /* Календарная сетка */
@@ -140,7 +140,7 @@
   font-size: 20px;
   font-weight: 600;
   margin: 0 0 16px 0;
-  color: var(--tg-theme-text-color, #000000);
+  color: #000000;
 }
 
 .events-loading {
@@ -220,7 +220,7 @@
   font-size: 16px;
   font-weight: 600;
   margin: 0 0 4px 0;
-  color: var(--tg-theme-text-color, #000000);
+  color: #000000;
   line-height: 1.3;
 }
 
