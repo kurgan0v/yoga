@@ -697,9 +697,3 @@
 }
 
 /* Для темной темы */
-@media (prefers-color-scheme: dark) {
-  .library-title,
-  .categories-title {
-    color: var(--tg-theme-text-color, #fff);
-  }
-} 

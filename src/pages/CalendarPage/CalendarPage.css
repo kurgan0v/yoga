@@ -254,41 +254,7 @@
   line-height: 1.3;
 }
 
-/* Темная тема */
-@media (prefers-color-scheme: dark) {
-  .calendar-page {
-    background: var(--tg-theme-bg-color, #1a1a1a);
-    color: var(--tg-theme-text-color, #ffffff);
-  }
-  
-  .calendar-grid {
-    background: #2a2a2a;
-  }
-  
-  .day-button {
-    color: #ffffff;
-  }
-  
-  .day-button.other-month {
-    color: #666666;
-  }
-  
-  .day-button.today {
-    background-color: #444444;
-  }
-  
-  .day-button:hover:not(:disabled):not(.selected) {
-    background-color: #444444;
-  }
-  
-  .event-card {
-    background: var(--tg-theme-secondary-bg-color, #2a2a2a);
-  }
-  
-  .event-card:hover {
-    background: var(--tg-theme-button-color, rgba(255, 255, 255, 0.1));
-  }
-}
+
 
 /* Адаптивность */
 @media (max-width: 380px) {
