@@ -686,14 +686,14 @@
   font-size: 2.2rem;
   font-weight: 800;
   margin: 0.5rem 0 1.5rem;
-  color: var(--tg-theme-text-color, #000);
+  color: #000;
 }
 
 .categories-title {
   font-size: 1.4rem;
   font-weight: 600;
   margin: 2rem 0 1.25rem;
-  color: var(--tg-theme-text-color, #000);
+  color: #000;
 }
 
 /* Для темной темы */

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { QuizProvider, useQuiz } from '@/contexts/QuizContext';
 import './QuizFlow.css';
 
@@ -16,8 +16,8 @@ import {Page} from "@/components";
 
 // Основной компонент с навигацией между шагами
 const QuizFlowContent: React.FC = () => {
-  const { state, goBack, resetQuiz } = useQuiz();
-  const navigate = useNavigate();
+  const { state, resetQuiz } = useQuiz();
+  // const navigate = useNavigate();
 
   // Автосброс квиза при каждом заходе
   useEffect(() => {
@@ -28,13 +28,13 @@ const QuizFlowContent: React.FC = () => {
 
 
   // Обработчик кнопки назад
-  const handleBack = () => {
-    if (state.step === 0) {
-      navigate('/');
-    } else {
-      goBack();
-    }
-  };
+  // const handleBack = () => {
+  //   if (state.step === 0) {
+  //     navigate('/');
+  //   } else {
+  //     goBack();
+  //   }
+  // };
 
   // Получение общего количества шагов
   // const getTotalSteps = () => {
@@ -147,16 +147,16 @@ const QuizFlowContent: React.FC = () => {
   return (
     <div className="quiz-container">
       {/* Кнопка назад только если не первый шаг */}
-      {state.step >= 0 && (
-        <div className="quiz-back-container">
-          <button className="quiz-back-button" onClick={handleBack}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Назад
-          </button>
-        </div>
-      )}
+      {/*{state.step >= 0 && (*/}
+      {/*  <div className="quiz-back-container">*/}
+      {/*    <button className="quiz-back-button" onClick={handleBack}>*/}
+      {/*      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">*/}
+      {/*        <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>*/}
+      {/*      </svg>*/}
+      {/*      Назад*/}
+      {/*    </button>*/}
+      {/*  </div>*/}
+      {/*)}*/}
 
       {/* Заголовок квиза */}
       {getStepTitle() && <div className="quiz-title">
