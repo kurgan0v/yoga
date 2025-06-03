@@ -20,15 +20,23 @@
 
 /* Темная тема */
 :root.dark {
-  --profile-bg: #1a202c;
-  --profile-text-primary: #f7fafc;
-  --profile-text-secondary: #e2e8f0;
-  --profile-text-tertiary: #a0aec0;
-  --profile-item-bg: #2d3748;
-  --profile-card-bg: #2d3748;
-  --profile-border: #4a5568;
-  --profile-progress-bg: #2c5282;
-  --profile-progress-fill: #63b3ed;
+  --profile-bg: #ffffff;
+  --profile-text-primary: var(--text-primary, #1a1a1a);
+  --profile-text-secondary: var(--text-secondary, #4a4a4a);
+  --profile-text-tertiary: var(--text-tertiary, #6d6d6d);
+  --profile-accent: var(--accent-color, #4e9bff);
+  --profile-accent-hover: var(--accent-hover, #3a87ff);
+  --profile-item-bg: var(--bg-item, #f9f9f9);
+  --profile-card-bg: var(--bg-card, #ffffff);
+  --profile-border: var(--border-color, #f0f0f0);
+  --profile-progress-bg: #e7f0ff;
+  --profile-progress-fill: var(--accent-color, #4e9bff);
+  --profile-shadow-sm: var(--shadow-sm, 0 2px 8px rgba(0, 0, 0, 0.03));
+  --profile-shadow-md: var(--shadow-md, 0 8px 16px rgba(0, 0, 0, 0.04));
+  --profile-radius-sm: var(--border-radius-sm, 0.5rem);
+  --profile-radius-md: var(--border-radius-md, 0.875rem);
+  --profile-radius-lg: var(--border-radius-lg, 1.25rem);
+  --profile-transition: var(--transition-standard, all 0.3s cubic-bezier(0.4, 0, 0.2, 1));
 }
 
 /* Анимация пульсации */

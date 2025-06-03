@@ -2,11 +2,11 @@
 .page-container {
   min-height: 100vh;
   width: 100%;
-  background-color: var(--profile-bg, #ffffff);
+  background-color: #ffffff;
 }
 
 html, body, #root {
-  background-color: var(--profile-bg, #ffffff);
+  background-color: #ffffff;
   scrollbar-width: none;
 }
 
