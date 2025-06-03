@@ -217,8 +217,8 @@ const LibraryPage: React.FC = () => {
                     <div className={'flex flex-col gap-4'} onClick={() => handleMainCategorySelect(category.id)}>
 
                       <div className={'flex items-center justify-between gap-2'}>
-                        <h3 className="font-bold text-2xl">{category.name}</h3>
-                        <p className={'text-[#D8D8D8] underline'}>все практики</p>
+                        <h3 className="font-bold text-2xl !text-black">{category.name}</h3>
+                        <p className={'text-[#D8D8D8] underline !text-black'}>все практики</p>
                       </div>
                       <p className="category-description">{category.description}</p>
                       <img src={category.img} className={''}/>
