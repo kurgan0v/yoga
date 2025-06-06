@@ -66,10 +66,6 @@ const EnhancedPracticePageWrapper: React.FC<EnhancedPracticePageWrapperProps> = 
     <Page>
       <div className="practice-page-wrapper">
         <div className="practice-header">
-          <button className="back-button" onClick={handleBack}>
-            <span>←</span>
-          </button>
-          
           {!isLoading && userId && (
             <button 
               className={`favorite-button ${isFav ? 'is-favorite' : ''}`} 

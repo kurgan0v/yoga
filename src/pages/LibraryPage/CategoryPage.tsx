@@ -56,12 +56,9 @@ const CategoryPage: React.FC = () => {
   };
   
   return (
-    <Page>
+    <Page onBackClick={handleBackClick}>
       <div className="category-page">
         <div className="category-header">
-          <button onClick={handleBackClick} className="back-button">
-            <span>←</span>
-          </button>
           <h1>{categorySlug ? getCategoryTitle(categorySlug) : 'Категория'}</h1>
         </div>
         

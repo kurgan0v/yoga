@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Page } from '@/components/Page';
 import { useFavorites } from '@/lib/supabase/hooks';
-import { useSupabaseUser } from '@/lib/supabase/hooks';
+import { useUser } from '@/contexts/UserContext';
 import { ContentItem } from '@/lib/supabase/hooks/useContents';
 import './FavoritesPage.css';
 
@@ -22,8 +22,17 @@ const FavoritesPage: React.FC = () => {
   const [showTimeFilter, setShowTimeFilter] = useState(false);
 
   // Получаем пользователя
-  const { supabaseUser } = useSupabaseUser(undefined);
+  const { user, supabaseUser } = useUser();
   const userId = supabaseUser?.id || null;
+
+  // Отладочная информация
+  console.log('🔍 FavoritesPage: User state', { 
+    user: !!user, 
+    supabaseUser: !!supabaseUser,
+    userId, 
+    userID: supabaseUser?.id,
+    telegramId: supabaseUser?.telegram_id 
+  });
 
   // Получаем избранное
   const { favorites, loading, error, removeFromFavorites } = useFavorites(userId);
