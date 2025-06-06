@@ -86,7 +86,7 @@ const FavoritesPage: React.FC = () => {
   };
 
   return (
-    <Page back={false}>
+    <Page back={true}>
       <div className="favorites-page">
         <div className="favorites-header">
           <h1>Избранное</h1>

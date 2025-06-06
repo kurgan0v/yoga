@@ -3,7 +3,7 @@ import { useQuiz } from '../../../contexts/QuizContext';
 import { useQuizStepsRealtime } from '../../../contexts/QuizContext';
 
 const QuizTypeStep: React.FC = () => {
-  const { state, setPracticeType, goNext } = useQuiz();
+  const { state, setPracticeType, setStep } = useQuiz();
   const { steps, loading } = useQuizStepsRealtime();
 
   // Находим шаг с type === 'practice_type'
@@ -13,7 +13,10 @@ const QuizTypeStep: React.FC = () => {
   // Обработчик выбора типа практики
   const handleSelectType = (value: string) => {
     setPracticeType(value as any);
-      goNext()
+    // Немедленно переходим к следующему шагу
+    setTimeout(() => {
+      setStep(1);
+    }, 0);
   };
 
   if (loading) {

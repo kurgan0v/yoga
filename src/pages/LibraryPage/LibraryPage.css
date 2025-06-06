@@ -386,6 +386,108 @@
   margin-bottom: 24px;
 }
 
+/* Полноширинный список практик */
+.practice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 24px;
+}
+
+.practice-full-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-bottom: 1px solid #000;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.practice-full-card:hover {
+  background-color: #f9f9f9;
+}
+
+.practice-full-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  background-color: #f0f0f0;
+}
+
+.practice-full-favorite-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+}
+
+.practice-full-favorite-button:hover {
+  background: rgba(0, 0, 0, 0.05);
+  transform: scale(1.1);
+}
+
+.practice-full-favorite-button.active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.favorite-flag-icon {
+  width: 20px;
+  height: 20px;
+  transition: all 0.2s;
+  opacity: 0.6;
+}
+
+.favorite-flag-icon.favorited {
+  opacity: 1;
+  filter: brightness(0.8);
+}
+
+.practice-full-favorite-button:hover .favorite-flag-icon {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.practice-full-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.practice-full-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+  color: #000;
+}
+
+.practice-full-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.practice-tag {
+  background: #333;
+  color: white;
+  padding: 4px 12px;
+  /* border-radius: 12px; */
+  font-size: 12px;
+  font-weight: 500;
+}
+
 .practice-square-card {
   display: flex;
   flex-direction: column;

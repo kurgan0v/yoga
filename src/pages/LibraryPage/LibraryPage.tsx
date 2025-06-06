@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Page } from '@/components/Page';
 import { useContents, ContentItem } from '@/lib/supabase/hooks/useContents';
 import { useFavorites } from '@/lib/supabase/hooks';
-import { useSupabaseUser } from '@/lib/supabase/hooks';
+// import { useSupabaseUser } from '@/lib/supabase/hooks';
 import './LibraryPage.css';
 import {
   initDataState as _initDataState,
   useSignal,
 } from '@telegram-apps/sdk-react';
 import {Link} from "@/components";
+import { useUser } from '@/contexts';
 // Основные категории для главной страницы библиотеки
 const mainCategories = [
   { id: 'physical', name: 'Тело', img: '/cat1.png', icon: '🧘‍♀️', description: 'Асаны и физические практики' },
@@ -33,7 +34,8 @@ const LibraryPage: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Получаем пользователя
-  const { supabaseUser } = useSupabaseUser(undefined);
+  // const { supabaseUser } = useSupabaseUser(undefined);
+  const { user, supabaseUser } = useUser();
   const userId = supabaseUser?.id || null;
 
   // Получаем избранное
@@ -125,9 +127,9 @@ const LibraryPage: React.FC = () => {
   };
 
   // Обработчик перехода к избранному
-  // const handleFavoritesClick = () => {
-  //   navigate('/library/favorites');
-  // };
+  const handleFavoritesClick = () => {
+    navigate('/library/favorites');
+  };
 
   // Обработчик переключения фильтра по времени
   const toggleTimeFilter = () => {
@@ -140,11 +142,11 @@ const LibraryPage: React.FC = () => {
     setShowTimeFilter(false);
   };
   // Получаем initData из Telegram SDK
-  const initDataState = useSignal(_initDataState);
+  // const initDataState = useSignal(_initDataState);
 
-  const user = useMemo(() =>
-          initDataState && initDataState.user ? initDataState.user : undefined,
-      [initDataState]);
+  // const user = useMemo(() =>
+  //         initDataState && initDataState.user ? initDataState.user : undefined,
+  //     [initDataState]);
   // Если категория не выбрана, показываем главную страницу
   if (selectedCategory === null) {
     return (
@@ -227,10 +229,12 @@ const LibraryPage: React.FC = () => {
               ))}
             </div>
 
-            {/* Кнопка избранного */}
-            {/*<button className="favorites-main-button" onClick={handleFavoritesClick}>
-              ❤️ Избранное
-            </button>*/}
+            {/* Раздел избранного */}
+            <div className={'!p-4 border-b border-black'}>
+              <div className={'flex justify-center'} onClick={handleFavoritesClick}>
+                <h3 className="font-bold text-2xl !text-black">Избранное</h3>
+              </div>
+            </div>
           </div>
         </Page>
     );
@@ -239,6 +243,24 @@ const LibraryPage: React.FC = () => {
   // Страница выбранной категории с практиками
   return (
       <Page back={true} onBackClick={handleBackToMain}>
+        {/* Header с фото профиля пользователя */}
+        {user && <div className="!py-2 !px-4 flex justify-between items-center border-b border-black">
+          <Link to={'/'} >
+            {user.photo_url ? (
+                <img className={'w-6 h-6 rounded-full border border-black'} src={user.photo_url}
+                     alt={user.username || user.first_name} loading="lazy"/>
+            ) : (
+                <div className="w-6 h-6 rounded-full !bg-gray-200 flex items-center justify-center"
+                     aria-hidden="true">
+                  {user.first_name.charAt(0)}
+                </div>
+            )}
+          </Link>
+
+          <img src={'/logo.svg'} alt={''}/>
+          <img src={'/settings.svg'} alt={''}/>
+        </div>}
+
         <div className={`library-container ${contentVisible ? 'content-visible' : ''}`}>
           <div className="library-header">
             <h1 className="library-title">
@@ -308,31 +330,36 @@ const LibraryPage: React.FC = () => {
                 : 'В этой категории пока нет практик'}
             </div>
           ) : (
-            <div className="practice-grid">
+            <div className="practice-list">
               {contents.map((item: ContentItem) => (
                 <div 
                   key={item.id} 
-                  className="practice-square-card"
+                  className="practice-full-card"
                   onClick={() => handlePracticeSelect(item)}
                 >
                   <div 
-                    className="practice-square-thumbnail" 
+                    className="practice-full-thumbnail" 
                     style={{ backgroundImage: `url(${item.thumbnail_url || '/img/practice-default.jpg'})` }}
                   >
+                  </div>
+                  <div className="practice-full-info">
+                    <div className="flex justify-between items-start">
+                      <h3 className="practice-full-title">{item.title}</h3>
                     <button 
-                      className={`square-favorite-button ${isFavorite(item.id) ? 'active' : ''}`}
+                        className={`practice-full-favorite-button ${isFavorite(item.id) ? 'active' : ''}`}
                       onClick={(e) => handleToggleFavorite(e, item.id)}
                     >
-                      {isFavorite(item.id) ? '❤️' : '🤍'}
+                        <img 
+                          src="/Interface.png" 
+                          alt="Добавить в избранное"
+                          className={`favorite-flag-icon ${isFavorite(item.id) ? 'favorited' : ''}`}
+                        />
                     </button>
-                    <div className="practice-duration-badge">
-                      {Math.floor(item.duration / 60)} мин
                     </div>
-                  </div>
-                  <div className="practice-square-info">
-                    <h3 className="practice-square-title">{item.title}</h3>
-                    <div className="practice-difficulty-stars">
-                      {'⭐'.repeat(Number(item.difficulty) || 2)}
+                    <div className="practice-full-tags">
+                      <span className="practice-tag">{Number(item.difficulty) || 2} силы</span>
+                      <span className="practice-tag">{Math.floor(item.duration / 60)}-{Math.ceil(item.duration / 60)} минут</span>
+                      <span className="practice-tag">{item.categories?.name || 'практика'}</span>
                     </div>
                   </div>
                 </div>

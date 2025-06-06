@@ -3,7 +3,7 @@ import { useQuiz } from '../../../contexts/QuizContext';
 import { useQuizStepsRealtime } from '../../../contexts/QuizContext';
 
 const QuizMeditationObjectStep: React.FC = () => {
-  const { state, setSelfMeditationSettings, goNext } = useQuiz();
+  const { state, setSelfMeditationSettings, setStep } = useQuiz();
   const { steps, loading } = useQuizStepsRealtime();
 
   // Находим шаг с type === 'meditation_object'
@@ -16,7 +16,11 @@ const QuizMeditationObjectStep: React.FC = () => {
       duration: state.selfMeditationSettings?.duration || 600, // 10 минут по умолчанию
       object: value as any
     });
-      goNext()
+    
+    // Переходим к выбору времени медитации
+    setTimeout(() => {
+      setStep(3);
+    }, 0);
   };
 
   if (loading) {
