@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { hideBackButton, onBackButtonClick, showBackButton, postEvent } from '@telegram-apps/sdk-react';
-import { type PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { type PropsWithChildren, useEffect, useRef, useState, useCallback } from 'react';
 import { SafeAreaFade } from '@/components/SafeAreaFade/SafeAreaFade';
 import TabBar from '@/components/TabBar/TabBar';
 import { useNavigationHistory } from '@/lib/hooks/useNavigationHistory';
@@ -55,7 +55,52 @@ export function Page({
   useEffect(() => {
     const checkTelegramEnvironment = () => {
       try {
-        const isTelegram = !!(window as any).Telegram?.WebApp;
+        // Проверяем разные способы определения Telegram
+        let isTelegram = false;
+        
+        // Способ 1: Проверяем WebApp API
+        if ((window as any).Telegram?.WebApp) {
+          isTelegram = true;
+        }
+        
+        // Способ 2: Проверяем наличие объекта Telegram и инициализируем WebApp
+        else if ((window as any).Telegram) {
+          try {
+            // Инициализируем WebApp если он не инициализирован
+            if (!(window as any).Telegram.WebApp) {
+              (window as any).Telegram.WebApp = (window as any).Telegram.WebApp || {};
+            }
+            isTelegram = true;
+          } catch (error) {
+            console.log('❌ Ошибка инициализации WebApp:', error);
+          }
+        }
+        
+        // Способ 3: Проверяем User Agent
+        else if (navigator.userAgent.includes('Telegram')) {
+          isTelegram = true;
+        }
+        
+        // Способ 4: Проверяем URL параметры
+        else if (window.location.search.includes('tgWebAppData') || 
+                 window.location.hash.includes('tgWebAppData')) {
+          isTelegram = true;
+        }
+        
+        // Если мы в Telegram, инициализируем WebApp
+        if (isTelegram && (window as any).Telegram?.WebApp) {
+          try {
+            const tg = (window as any).Telegram.WebApp;
+            
+            // Вызываем ready() для полной инициализации
+            if (typeof tg.ready === 'function') {
+              tg.ready();
+            }
+          } catch (error) {
+            console.error('❌ Ошибка инициализации WebApp:', error);
+          }
+        }
+        
         setIsInTelegram(isTelegram);
         return isTelegram;
       } catch (error) {
@@ -68,14 +113,14 @@ export function Page({
     checkTelegramEnvironment();
   }, []);
 
-  // Обработчик кнопки "Назад"
-  const handleBackClick = () => {
+  // Обработчик кнопки "Назад" - используем useCallback для стабильной ссылки
+  const handleBackClick = useCallback(() => {
     if (onBackClick) {
       onBackClick();
     } else {
       goBack();
     }
-  };
+  }, [onBackClick, goBack]);
 
   // Обработчик клавиши Escape для браузера
   useEffect(() => {
@@ -92,30 +137,68 @@ export function Page({
         document.removeEventListener('keydown', handleKeyDown);
       };
     }
-  }, [isInTelegram, back, onBackClick]);
+  }, [isInTelegram, back, handleBackClick]);
 
+  // Настройка кнопки назад в Telegram
   useEffect(() => {
+    if (!isInTelegram) {
+      return;
+    }
+
+    let cleanup: (() => void) | undefined;
+
     if (back) {
-      if (isInTelegram) {
-        // В Telegram используем SDK
-        try {
+      try {
+        // Пробуем использовать нативный Telegram WebApp API
+        const tg = (window as any).Telegram?.WebApp;
+        if (tg && tg.BackButton) {
+          // Показываем кнопку назад
+          tg.BackButton.show();
+          
+          // Подключаем обработчик
+          const backHandler = () => {
+            handleBackClick();
+          };
+          
+          tg.BackButton.onClick(backHandler);
+          
+          cleanup = () => {
+            tg.BackButton.offClick(backHandler);
+            tg.BackButton.hide();
+          };
+        } else {
+          // Fallback к SDK функциям
           showBackButton();
-          return onBackButtonClick(handleBackClick);
-        } catch (error) {
-          console.log('Ошибка при настройке кнопки назад в Telegram:', error);
+          cleanup = onBackButtonClick(handleBackClick);
         }
+      } catch (error) {
+        console.error('❌ Ошибка при настройке кнопки назад в Telegram:', error);
       }
-      // В браузере кнопка "Назад" будет отображаться в UI
     } else {
-      if (isInTelegram) {
-        try {
+      try {
+        // Скрываем кнопку назад
+        const tg = (window as any).Telegram?.WebApp;
+        if (tg && tg.BackButton) {
+          tg.BackButton.hide();
+        } else {
           hideBackButton();
-        } catch (error) {
-          console.log('Ошибка при скрытии кнопки назад в Telegram:', error);
         }
+      } catch (error) {
+        console.error('❌ Ошибка при скрытии кнопки назад в Telegram:', error);
       }
     }
-  }, [back, isInTelegram, onBackClick]);
+
+    // Cleanup функция
+    return () => {
+      if (cleanup) {
+        try {
+          cleanup();
+        } catch (error) {
+          console.error('❌ Ошибка при очистке обработчика кнопки назад:', error);
+        }
+      }
+    };
+  }, [back, isInTelegram, handleBackClick]);
 
   // Повторно запрашиваем safe area при монтировании страницы
   useEffect(() => {
